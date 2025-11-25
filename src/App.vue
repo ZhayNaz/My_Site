@@ -1,26 +1,81 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <v-app>
+    <!-- Top App Bar -->
+    <v-app-bar
+      color="#f1f3f4"
+      height="68"
+      elevation="2"
+      density="comfortable"
+    >
+      <!-- Burger menu -->
+      <v-app-bar-nav-icon @click="drawer = !drawer" class="text-dark" />
+
+      <v-app-bar-title class="text-dark">
+        <b>Zhay's Techoprenuership</b>
+      </v-app-bar-title>
+
+      <v-spacer></v-spacer>
+
+      <v-btn
+        icon
+        class="text-dark"
+        @click="toggleDarkMode"
+      >
+        <v-icon>{{ dark ? 'mdi-weather-night' : 'mdi-white-balance-sunny' }}</v-icon>
+      </v-btn>
+    </v-app-bar>
+
+    <v-navigation-drawer
+      v-model="drawer"
+      app
+      color="#ffffff"
+      elevation="2"
+      width="250"
+      temporary
+    >
+      <v-list>
+        <v-list-item to="/" @click="drawer = false">
+          <v-list-item-title>Home</v-list-item-title>
+        </v-list-item>
+
+        <v-list-item to="/about" @click="drawer = false">
+          <v-list-item-title>About</v-list-item-title>
+        </v-list-item>
+
+        <v-list-item to="/contact" @click="drawer = false">
+          <v-list-item-title>Contact</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+
+    <v-main class="bg-grey-lighten-4">
+      <router-view></router-view>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
+  data() {
+    return {
+      drawer: false,
+      dark: false,
+    }
+  },
+  methods: {
+    toggleDarkMode() {
+      this.dark = !this.dark;
+      document.body.classList.toggle('theme--dark', this.dark);
+    }
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+.text-dark {
+  color: #3c4043 !important;
+}
+.bg-grey-lighten-4 {
+  background-color: #f5f5f5 !important;
 }
 </style>

@@ -1,13 +1,11 @@
 <template>
   <v-app>
-    <!-- Top App Bar -->
     <v-app-bar
       color="#f1f3f4"
       height="68"
       elevation="2"
       density="comfortable"
     >
-      <!-- Burger menu -->
       <v-app-bar-nav-icon @click="drawer = !drawer" class="text-dark" />
 
       <v-app-bar-title class="text-dark">
@@ -44,6 +42,9 @@
 
         <v-list-item to="/contact" @click="drawer = false">
           <v-list-item-title>Contact</v-list-item-title>
+        </v-list-item>
+        <v-list-item to="/donate" @click="drawer = false">
+          <v-list-item-title>Donate</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>

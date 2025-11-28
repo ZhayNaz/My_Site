@@ -46,6 +46,9 @@
         <v-list-item to="/donate" @click="drawer = false">
           <v-list-item-title>Donate</v-list-item-title>
         </v-list-item>
+        <v-list-item to="/blogs" @click="drawer = false">
+          <v-list-item-title>Blogs</v-list-item-title>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
 

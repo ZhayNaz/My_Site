@@ -4,6 +4,7 @@ import Home from '@/components/HomePage.vue'
 import About from '@/components/AboutPage.vue'
 import Contact from '@/components/ContactPage.vue'
 import Donate from '@/components/DonatePage.vue'
+import Blogs from '@/components/BlogsPage.vue'
 
 const routes = [
   {
@@ -21,10 +22,15 @@ const routes = [
     name: 'Contact',
     component: Contact
   },
-   {
+  {
     path: '/donate',
     name: 'Donate',
     component: Donate
+  },
+  {
+    path: '/blogs',
+    name: 'Blogs',
+    component: Blogs
   }
 ]
 

@@ -31,7 +31,6 @@
             </v-btn>
           </v-btn-toggle>
 
-          <!-- Custom Amount -->
           <v-text-field
             v-model="customAmount"
             label="Or Enter Custom Amount"
@@ -40,7 +39,6 @@
             min="1"
           ></v-text-field>
 
-          <!-- Donor Name -->
           <v-text-field
             v-model="name"
             label="Your Name (Optional)"
@@ -61,7 +59,6 @@
       </v-col>
     </v-row>
 
-    <!-- Thank You Message -->
     <v-row>
       <v-col cols="12" class="text-center mt-10">
         <p class="subtitle-2 text-dark">
@@ -82,7 +79,7 @@ export default {
       selectedAmount: null,
       customAmount: "",
       name: "",
-      presets: [50, 100, 200, 500, 1000], // Preset amounts
+      presets: [50, 100, 200, 500, 1000],
     };
   },
   methods: {
@@ -115,7 +112,6 @@ export default {
         confirmButtonColor: "#673ab7",
       });
 
-      // Reset
       this.selectedAmount = null;
       this.customAmount = "";
       this.name = "";

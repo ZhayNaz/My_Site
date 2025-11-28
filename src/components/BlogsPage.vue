@@ -1,0 +1,165 @@
+<template>
+  <v-container fluid class="pa-8 bg-grey-lighten-4">
+
+    <!-- PAGE TITLE -->
+    <v-row>
+      <v-col cols="12" class="text-center mb-10">
+        <h1 class="display-1 font-weight-bold text-dark">Tech Blogs</h1>
+        <p class="subtitle-1 text-dark">
+          Explore insights, tutorials, and innovations in Computer Engineering & Technology.
+        </p>
+      </v-col>
+    </v-row>
+
+    <!-- FEATURED BLOG -->
+    <v-row class="justify-center mb-12">
+      <v-col cols="12" md="10">
+        <v-card class="featured-card hoverable rounded-xl" elevation="6">
+          <v-img
+            src="https://images.unsplash.com/photo-1518770660439-4636190af475"
+            height="320"
+            class="rounded-t-xl"
+            cover
+          ></v-img>
+
+          <v-card-text class="pa-6">
+            <h2 class="text-dark font-weight-bold mb-2">
+              The Future of AI in Computer Engineering
+            </h2>
+
+            <p class="text-dark">
+              Discover how artificial intelligence is transforming industries—from automation
+              to cybersecurity and real-time optimization.
+            </p>
+
+            <v-chip class="ma-1" color="deep-purple accent-4" text-color="white" small>AI</v-chip>
+            <v-chip class="ma-1" color="blue-grey darken-1" text-color="white" small>Innovation</v-chip>
+
+            <v-btn
+              color="deep-purple accent-4"
+              rounded
+              class="mt-4"
+              @click="readMore('ai-future')"
+            >
+              Read More
+            </v-btn>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+
+    <!-- BLOG LIST -->
+    <v-row>
+      <v-col
+        cols="12"
+        md="4"
+        v-for="blog in blogs"
+        :key="blog.id"
+      >
+        <v-card class="pa-4 hoverable rounded-xl" elevation="4">
+
+          <v-img
+            :src="blog.image"
+            height="180"
+            class="rounded-lg mb-4"
+            cover
+          ></v-img>
+
+          <h3 class="text-dark font-weight-bold mb-2">{{ blog.title }}</h3>
+
+          <p class="text-dark" style="min-height: 70px;">
+            {{ blog.description }}
+          </p>
+
+          <div class="mb-3">
+            <v-chip
+              v-for="tag in blog.tags"
+              :key="tag"
+              class="ma-1"
+              small
+              color="blue-grey lighten-3"
+              text-color="black"
+            >
+              {{ tag }}
+            </v-chip>
+          </div>
+
+          <v-btn
+            color="deep-purple accent-4"
+            rounded
+            @click="readMore(blog.id)"
+          >
+            Read More
+          </v-btn>
+
+        </v-card>
+      </v-col>
+    </v-row>
+
+  </v-container>
+</template>
+
+<script>
+export default {
+  name: "BlogsPage",
+  data() {
+    return {
+      blogs: [
+        {
+          id: "networking-basics",
+          title: "Networking Basics for Small Businesses",
+          description:
+            "Learn the fundamentals of routers, switches, and secure connections to protect and optimize your company network.",
+          image: "https://images.unsplash.com/photo-1581092334587-2f2c2a2c218c",
+          tags: ["Networking", "SME", "Security"],
+        },
+        {
+          id: "cybersecurity-tips",
+          title: "Top Cybersecurity Tips for 2025",
+          description:
+            "Strengthen your digital defenses with these essential cybersecurity strategies for modern businesses.",
+          image: "https://images.unsplash.com/photo-1591696205602-2f950c417cb9",
+          tags: ["Cybersecurity", "Data Protection"],
+        },
+        {
+          id: "software-dev",
+          title: "Why Custom Software Boosts Business Efficiency",
+          description:
+            "Explore how tailored software solutions reduce workload, improve accuracy, and streamline operations.",
+          image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c",
+          tags: ["Software", "Development", "Productivity"],
+        },
+      ],
+    };
+  },
+
+  methods: {
+    readMore(id) {
+      this.$router.push(`/blogs/${id}`);
+    },
+  },
+};
+</script>
+
+<style scoped>
+.bg-grey-lighten-4 {
+  background-color: #f5f5f5 !important;
+}
+
+.text-dark {
+  color: #3c4043 !important;
+}
+
+.hoverable {
+  transition: 0.3s ease;
+}
+
+.hoverable:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.12);
+}
+
+.featured-card {
+  overflow: hidden;
+}
+</style>

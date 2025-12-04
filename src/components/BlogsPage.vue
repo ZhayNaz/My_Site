@@ -1,7 +1,6 @@
 <template>
   <v-container fluid class="pa-8 bg-grey-lighten-4">
 
-    <!-- PAGE TITLE -->
     <v-row>
       <v-col cols="12" class="text-center mb-10">
         <h1 class="display-1 font-weight-bold text-dark">Tech Blogs</h1>
@@ -11,7 +10,6 @@
       </v-col>
     </v-row>
 
-    <!-- FEATURED BLOG -->
     <v-row class="justify-center mb-12">
       <v-col cols="12" md="10">
         <v-card class="featured-card hoverable rounded-xl" elevation="6">
@@ -48,7 +46,6 @@
       </v-col>
     </v-row>
 
-    <!-- BLOG LIST -->
     <v-row>
       <v-col
         cols="12"
@@ -96,12 +93,24 @@
       </v-col>
     </v-row>
 
+    <v-btn
+      class="fab-btn"
+      color="deep-purple accent-4"
+      size="large"
+      icon
+      elevation="8"
+      @click="addNewPost"
+    >
+      <v-icon>mdi-plus</v-icon>
+    </v-btn>
+
   </v-container>
 </template>
 
 <script>
 export default {
   name: "BlogsPage",
+
   data() {
     return {
       blogs: [
@@ -137,6 +146,9 @@ export default {
     readMore(id) {
       this.$router.push(`/blogs/${id}`);
     },
+    addNewPost() {
+      this.$router.push("/blogs/new");
+    },
   },
 };
 </script>
@@ -161,5 +173,19 @@ export default {
 
 .featured-card {
   overflow: hidden;
+}
+
+/* Floating Action Button */
+.fab-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 999;
+  border-radius: 50%;
+  transition: 0.25s ease;
+}
+
+.fab-btn:hover {
+  transform: scale(1.1);
 }
 </style>

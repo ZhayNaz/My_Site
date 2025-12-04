@@ -5,6 +5,7 @@ import About from '@/components/AboutPage.vue'
 import Contact from '@/components/ContactPage.vue'
 import Donate from '@/components/DonatePage.vue'
 import Blogs from '@/components/BlogsPage.vue'
+import Music from '@/components/MusicPage.vue'
 
 const routes = [
   {
@@ -26,6 +27,11 @@ const routes = [
     path: '/donate',
     name: 'Donate',
     component: Donate
+  },
+  {
+    path: '/music',
+    name: 'Music',
+    component: Music
   },
   {
     path: '/blogs',

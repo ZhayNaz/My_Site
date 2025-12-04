@@ -36,18 +36,24 @@
           <v-list-item-title>Home</v-list-item-title>
         </v-list-item>
 
+        <v-list-item to="/contact" @click="drawer = false">
+          <v-list-item-title>Contact</v-list-item-title>
+        </v-list-item>
+
+        <v-list-item to="/blogs" @click="drawer = false">
+          <v-list-item-title>Blogs</v-list-item-title>
+        </v-list-item>
+
+        <v-list-item to="/music" @click="drawer = false">
+          <v-list-item-title>Music</v-list-item-title>
+        </v-list-item>
+
         <v-list-item to="/about" @click="drawer = false">
           <v-list-item-title>About</v-list-item-title>
         </v-list-item>
 
-        <v-list-item to="/contact" @click="drawer = false">
-          <v-list-item-title>Contact</v-list-item-title>
-        </v-list-item>
         <v-list-item to="/donate" @click="drawer = false">
           <v-list-item-title>Donate</v-list-item-title>
-        </v-list-item>
-        <v-list-item to="/blogs" @click="drawer = false">
-          <v-list-item-title>Blogs</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
@@ -63,13 +69,13 @@ export default {
   data() {
     return {
       drawer: false,
-      dark: false,
+      dark: true,
     }
   },
   methods: {
     toggleDarkMode() {
       this.dark = !this.dark;
-      document.body.classList.toggle('theme--dark', this.dark);
+      document.body.classList.toggle('text-dark', this.dark);
     }
   }
 }

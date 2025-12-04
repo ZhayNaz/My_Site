@@ -1,6 +1,5 @@
 <template>
   <v-container fluid class="pa-6 bg-grey-lighten-4">
-    <!-- Header Section -->
     <v-row>
       <v-col cols="12" class="text-center mb-10">
         <h1 class="display-1 font-weight-bold text-dark mb-4">
@@ -12,7 +11,6 @@
       </v-col>
     </v-row>
 
-    <!-- Mission & Vision -->
     <v-row class="mb-12" dense>
       <v-col cols="12" md="6">
         <v-card elevation="4" class="pa-6 hoverable rounded-lg">
@@ -35,7 +33,6 @@
       </v-col>
     </v-row>
 
-    <!-- Team Section -->
     <v-row>
       <v-col cols="12" class="text-center mb-8">
         <h2 class="display-2 font-weight-bold text-dark">Meet Our Team</h2>
@@ -44,11 +41,10 @@
         </p>
       </v-col>
 
-      <!-- Developer Cards -->
       <v-col cols="12" md="4" v-for="(member, i) in team" :key="i">
         <v-card elevation="6" class="pa-6 hoverable text-center rounded-lg">
           <v-avatar size="100" class="mx-auto mb-4">
-            <img :src="member.photo" alt="team photo">
+            <img src="../assets/founder.jpg" alt="team photo" height="120" width="120">
           </v-avatar>
           <h3 class="headline mb-2 text-dark">{{ member.name }}</h3>
           <p class="subtitle-2 text-dark mb-3">{{ member.role }}</p>
@@ -69,8 +65,8 @@ export default {
         {
           name: "Joseph Jeremy C. Garcia",
           role: "Lead Developer & Founder",
-          bio: "With over 10 years of experience in software engineering, Joseph leads the team with innovation and technical excellence.",
-          photo: "https://via.placeholder.com/100", 
+          bio: "With over 5 years of experience in software engineering, Joseph leads the team with innovation and technical excellence.",
+          photo: "", 
         },
       ],
     };

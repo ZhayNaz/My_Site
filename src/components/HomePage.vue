@@ -1,6 +1,5 @@
 <template>
   <v-container fluid class="pa-6 bg-grey-lighten-4">
-    <!-- Header Section with Gradient -->
     <v-row class="mb-12">
       <v-col cols="12" class="text-center">
         <div class="header-gradient pa-12 rounded">
@@ -23,7 +22,6 @@
       </v-col>
     </v-row>
 
-    <!-- Services Section -->
     <v-row dense class="mb-12">
       <v-col cols="12" md="4" v-for="(service, i) in services" :key="i">
         <v-card elevation="6" class="pa-6 hoverable text-center rounded-lg">
@@ -39,7 +37,6 @@
       </v-col>
     </v-row>
 
-    <!-- Why Choose Us Section -->
     <v-row class="mb-12">
       <v-col cols="12" class="text-center mb-8">
         <h2 class="display-2 font-weight-bold text-dark">Why Choose Us?</h2>

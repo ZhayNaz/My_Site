@@ -9,7 +9,7 @@
       <v-app-bar-nav-icon @click="drawer = !drawer" class="text-dark" />
 
       <v-app-bar-title class="text-dark">
-        <b>Zhay's Techoprenuership</b>
+        <b>Zhay's Technoprenuership</b>
       </v-app-bar-title>
 
       <v-spacer></v-spacer>

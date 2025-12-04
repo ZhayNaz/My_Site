@@ -6,5 +6,19 @@
       "**/.*",
       "**/node_modules/**"
     ]
+  },
+  "emulators": {
+    "dataconnect": {
+      "dataDir": "dataconnect/.dataconnect/pgliteData"
+    }
+  },
+  "dataconnect": {
+    "source": "dataconnect"
+  },
+  "storage": {
+    "rules": "js"
+  },
+  "database": {
+    "rules": "package.json"
   }
 }

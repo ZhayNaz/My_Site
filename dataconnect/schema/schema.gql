@@ -1,0 +1,36 @@
+type User @table {
+  username: String!
+  createdAt: Timestamp!
+  email: String
+  lastLoginAt: Timestamp
+}
+
+type ConnectionType @table {
+  name: String!
+  description: String
+}
+
+type Connection @table {
+  name: String!
+  createdAt: Timestamp!
+  description: String
+  hostname: String
+  port: Int
+  username: String
+  password: String
+  apiKey: String
+  url: String
+  isFavorite: Boolean
+  user: User
+  connectionType: ConnectionType
+}
+
+type Tag @table {
+  name: String!
+  description: String
+}
+
+type ConnectionTag @table(key: ["connection", "tag"]) {
+  connection: Connection!
+  tag: Tag!
+}

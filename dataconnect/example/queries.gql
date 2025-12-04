@@ -1,0 +1,25 @@
+mutation CreateTag($name: String!, $description: String) @auth(level: USER) {
+  tag_insert(data: {name: $name, description: $description})
+}
+
+query GetConnectionsForUser($userId: UUID!) @auth(level: USER) {
+  connections(where: {userId: {eq: $userId}}) {
+    id
+    name
+    description
+    url
+    username
+  }
+}
+
+mutation UpdateConnection($id: UUID!, $name: String, $description: String, $url: String, $username: String) @auth(level: USER) {
+  connection_update(key: {id: $id}, data: {name: $name, description: $description, url: $url, username: $username})
+}
+
+query ListAllPublicTags @auth(level: PUBLIC, insecureReason: "This operation is safe to expose to the public") {
+  tags {
+    id
+    name
+    description
+  }
+}

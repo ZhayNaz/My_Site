@@ -8,8 +8,10 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@dataconnect/generated": "link:src\\dataconnect-generated",
     "@mdi/font": "^7.4.47",
     "core-js": "^3.8.3",
+    "firebase": "^12.6.0",
     "sweetalert2": "^11.26.3",
     "vue": "^3.2.13",
     "vue-router": "^4.6.3",

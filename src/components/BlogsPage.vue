@@ -99,7 +99,7 @@
       size="large"
       icon
       elevation="8"
-      @click="addNewPost"
+      @click="addNewPost()"
     >
       <v-icon>mdi-plus</v-icon>
     </v-btn>
@@ -107,51 +107,7 @@
   </v-container>
 </template>
 
-<script>
-export default {
-  name: "BlogsPage",
-
-  data() {
-    return {
-      blogs: [
-        {
-          id: "networking-basics",
-          title: "Networking Basics for Small Businesses",
-          description:
-            "Learn the fundamentals of routers, switches, and secure connections to protect and optimize your company network.",
-          image: "https://images.unsplash.com/photo-1581092334587-2f2c2a2c218c",
-          tags: ["Networking", "SME", "Security"],
-        },
-        {
-          id: "cybersecurity-tips",
-          title: "Top Cybersecurity Tips for 2025",
-          description:
-            "Strengthen your digital defenses with these essential cybersecurity strategies for modern businesses.",
-          image: "https://images.unsplash.com/photo-1591696205602-2f950c417cb9",
-          tags: ["Cybersecurity", "Data Protection"],
-        },
-        {
-          id: "software-dev",
-          title: "Why Custom Software Boosts Business Efficiency",
-          description:
-            "Explore how tailored software solutions reduce workload, improve accuracy, and streamline operations.",
-          image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c",
-          tags: ["Software", "Development", "Productivity"],
-        },
-      ],
-    };
-  },
-
-  methods: {
-    readMore(id) {
-      this.$router.push(`/blogs/${id}`);
-    },
-    addNewPost() {
-      this.$router.push("/blogs/new");
-    },
-  },
-};
-</script>
+<script src="./Scripts/BlogsPage.js"></script>
 
 <style scoped>
 .bg-grey-lighten-4 {

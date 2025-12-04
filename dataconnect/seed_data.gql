@@ -1,0 +1,66 @@
+mutation CreateSeedData @transaction @auth(level: PUBLIC, insecureReason: "This operation is safe to expose to the public") {
+  user_insertMany(data: [
+    {
+      id: "550e8400-e29b-41d4-a716-446655440000",
+      username: "demouser1",
+      email: "demouser1@example.com",
+      createdAt: "2024-01-01T00:00:00Z"
+    },
+    {
+      id: "550e8400-e29b-41d4-a716-446655440001",
+      username: "demouser2",
+      email: "demouser2@example.com",
+      createdAt: "2024-01-01T00:00:00Z"
+    }
+  ])
+  connectionType_insertMany(data: [
+    {
+      id: "650e8400-e29b-41d4-a716-446655440000",
+      name: "Postgres",
+      description: "Postgres Database Connection"
+    },
+    {
+      id: "650e8400-e29b-41d4-a716-446655440001",
+      name: "Mongo",
+      description: "Mongo Database Connection"
+    }
+  ])
+  connection_insertMany(data: [
+    {
+      id: "750e8400-e29b-41d4-a716-446655440000",
+      userId: "550e8400-e29b-41d4-a716-446655440000",
+      connectionTypeId: "650e8400-e29b-41d4-a716-446655440000",
+      name: "My Postgres Connection",
+      createdAt: "2024-01-02T00:00:00Z"
+    },
+    {
+      id: "750e8400-e29b-41d4-a716-446655440001",
+      userId: "550e8400-e29b-41d4-a716-446655440001",
+      connectionTypeId: "650e8400-e29b-41d4-a716-446655440001",
+      name: "My Mongo Connection",
+      createdAt: "2024-01-02T00:00:00Z"
+    }
+  ])
+  tag_insertMany(data: [
+    {
+      id: "850e8400-e29b-41d4-a716-446655440000",
+      name: "Production",
+      description: "Production Environment"
+    },
+    {
+      id: "850e8400-e29b-41d4-a716-446655440001",
+      name: "Development",
+      description: "Development Environment"
+    }
+  ])
+  connectionTag_insertMany(data: [
+    {
+      connectionId: "750e8400-e29b-41d4-a716-446655440000",
+      tagId: "850e8400-e29b-41d4-a716-446655440000"
+    },
+    {
+      connectionId: "750e8400-e29b-41d4-a716-446655440001",
+      tagId: "850e8400-e29b-41d4-a716-446655440001"
+    }
+  ])
+}

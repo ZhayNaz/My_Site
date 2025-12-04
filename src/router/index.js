@@ -6,6 +6,7 @@ import Contact from '@/components/ContactPage.vue'
 import Donate from '@/components/DonatePage.vue'
 import Blogs from '@/components/BlogsPage.vue'
 import Music from '@/components/MusicPage.vue'
+import New from '@/components/NewPage.vue'
 
 const routes = [
   {
@@ -37,6 +38,11 @@ const routes = [
     path: '/blogs',
     name: 'Blogs',
     component: Blogs
+  },
+    {
+    path: '/blogs/new',
+    name: 'New',
+    component: New
   }
 ]
 

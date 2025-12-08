@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="index.css">
+<title>Notes & Blogs App</title>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+
+<div id="app" class="container">
+
+  <!-- Navigation -->
+  <nav>
+    <div><strong>My App</strong></div>
+    <div>
+      <a href="#" @click.prevent="currentPage='home'">Home</a>
+      <a href="#" @click.prevent="currentPage='blogs'">Blogs</a>
+      <a href="#" @click.prevent="currentPage='about'">About</a>
+    </div>
+  </nav>
+
+  <!-- Home Page -->
+  <div v-if="currentPage==='home'">
+    <h2>{{ title }}</h2>
+    <div class="note-input">
+      <input id="newNotes" placeholder="Add a new note">
+      <button @click="addNewNotes()">Add Note</button>
+    </div>
+
+    <div v-for="note in notes" :key="note.id" class="card">
+      <p><b>{{ note.description }}</b></p>
+      <button @click="deleteNotes(note.id)">Delete</button>
+    </div>
+  </div>
+
+  <!-- Blogs Page -->
+  <div v-if="currentPage==='blogs'">
+    <h2>Blogs</h2>
+
+    <!-- Floating Add Button -->
+    <button class="fab-btn" @click="showBlogModal = true">+</button>
+
+    <div v-for="blog in blogs" :key="blog.id" class="blog-card">
+      <span class="post-date">{{ blog.date }}</span>
+      <p class="title">{{ blog.title }}</p>
+      <p class="content">{{ blog.content }}</p>
+
+      <!-- Likes -->
+      <div class="blog-actions">
+        <button @click="likeBlog(blog.id)">👍 {{ blog.likes || 0 }}</button>
+        <button @click="toggleCommentInput(blog.id)">💬 Comment</button>
+      </div>
+
+      <!-- Comment Input -->
+      <div v-if="blog.showCommentInput" class="comment-box">
+        <input type="text" v-model="blog.newComment" placeholder="Write a comment...">
+        <button @click="addComment(blog.id)">Post</button>
+      </div>
+
+      <!-- Display Comments -->
+      <div class="comments-list">
+        <div v-for="(comment, index) in blog.comments" :key="index" class="comment-item">
+          <b>{{ comment.user }}:</b> {{ comment.comment }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Blog Modal -->
+    <div v-if="showBlogModal" class="modal">
+      <div class="modal-content">
+        <button class="modal-close" @click="closeModal">&times;</button>
+        <h3>Add New Blog</h3>
+        <input v-model="newBlogTitle" class="modal-input" placeholder="Blog Title">
+        <textarea v-model="newBlogContent" class="modal-textarea" placeholder="Blog Content" rows="5"></textarea>
+        <button class="post-btn" @click="submitBlog()">Post Blog</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- About Page -->
+  <div v-if="currentPage==='about'" class="about-card">
+    <div class="about-header">
+      <img src="ID.png" alt="Developer" class="developer-img">
+      <p class="developer-name">Zhay Nation</p>
+    </div>
+
+    <div class="app-info">
+      <h2>About This App</h2>
+      <p>This is a simple To-Do Notes & Blogs app built with Vue 3 and Firebase.</p>
+      <p><b>Page Views:</b> {{ aboutViews }}</p>
+    </div>
+
+    <div class="dev-card">
+      <h2>Developer Info</h2>
+      <div class="dev-info">
+        <p><b>Name:</b> Zhay Nation</p>
+        <p><b>Role:</b> Full-Stack Developer / Computer Engineer</p>
+        <p><b>Email:</b> <a href="mailto:mrjosephgarcia@gmail.com">mrjosephgarcia@gmail.com</a></p>
+        <p><b>GitHub:</b> <a href="https://github.com/ZhayNaz" target="_blank">github.com/ZhayNaz</a></p>
+        <p><b>LinkedIn:</b> <a href="www.linkedin.com/in/joseph-jeremy-garcia-engineering" target="_blank">joseph-jeremy-garcia-engineering</a></p>
+        <p><b>Short Bio:</b> Passionate about building web and mobile apps, with experience in Vue.js, Firebase, and full-stack development.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="firebaseComfig.js"></script>
+<script type="module">
+import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js'
+import { getFirestore, collection, getDocs, addDoc, deleteDoc, doc, serverTimestamp, updateDoc, getDoc, query, orderBy } from 'https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js'
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+createApp({
+  data() {
+    return {
+      title: "To-Do Notes",
+      notes: [],
+      blogs: [],
+      currentPage: 'home',
+      showBlogModal: false,
+      newBlogTitle: '',
+      newBlogContent: '',
+      aboutViews: 0,
+      username: '', // alias for comments
+    }
+  },
+
+  methods: {
+    async refreshData() {
+      // Notes
+      this.notes = [];
+      const noteSnapshot = await getDocs(collection(db, "notes"));
+      noteSnapshot.forEach(doc => {
+        this.notes.push({ description: doc.data().description, id: doc.id });
+      });
+
+      // Blogs
+      this.blogs = [];
+      const blogSnapshot = await getDocs(collection(db, "blogs"));
+      for(const docSnap of blogSnapshot.docs){
+        const data = docSnap.data();
+        const date = data.date ? new Date(data.date.seconds * 1000).toLocaleString() : '';
+        // Fetch comments subcollection
+        const commentsSnap = await getDocs(collection(db, "blogs", docSnap.id, "comments"));
+        const comments = commentsSnap.docs.map(c => c.data()).sort((a,b)=> new Date(a.timestamp.seconds||0) - new Date(b.timestamp.seconds||0));
+        this.blogs.push({ 
+          title: data.title,
+          content: data.content,
+          id: docSnap.id,
+          date,
+          likes: data.likes || 0,
+          comments,
+          showCommentInput: false,
+          newComment: ''
+        });
+      }
+      this.blogs.sort((a,b)=> new Date(b.date) - new Date(a.date));
+    },
+
+    async addNewNotes() {
+      const newNotes = document.getElementById("newNotes").value;
+      if(!newNotes) return Swal.fire({ icon:'warning', title:'Empty Note', text:'Please enter a note!' });
+      await addDoc(collection(db,"notes"), { description: newNotes });
+      document.getElementById("newNotes").value='';
+      this.refreshData();
+      Swal.fire({ icon:'success', title:'Note Added', timer:1000, showConfirmButton:false });
+    },
+
+    async deleteNotes(id) {
+      await deleteDoc(doc(db,"notes",id));
+      this.refreshData();
+      Swal.fire({ icon:'success', title:'Note Deleted', timer:1000, showConfirmButton:false });
+    },
+
+    async submitBlog() {
+      if(!this.newBlogTitle || !this.newBlogContent) return Swal.fire({icon:'warning', title:'Missing Fields', text:'Please enter title & content!'});
+      await addDoc(collection(db,"blogs"), { title:this.newBlogTitle, content:this.newBlogContent, date:serverTimestamp(), likes:0 });
+      this.newBlogTitle='';
+      this.newBlogContent='';
+      this.showBlogModal=false;
+      this.refreshData();
+      Swal.fire({ icon:'success', title:'Blog Posted!', timer:1000, showConfirmButton:false });
+    },
+
+    async deleteBlog(id) {
+      await deleteDoc(doc(db,"blogs",id));
+      this.refreshData();
+      Swal.fire({ icon:'success', title:'Blog Deleted', timer:1000, showConfirmButton:false });
+    },
+
+    closeModal() {
+      this.showBlogModal=false;
+    },
+
+    toggleCommentInput(blogId) {
+      const blog = this.blogs.find(b=>b.id===blogId);
+      if(blog) blog.showCommentInput=!blog.showCommentInput;
+    },
+
+    async likeBlog(blogId) {
+      const blogRef = doc(db,"blogs",blogId);
+      const blogSnap = await getDoc(blogRef);
+      if(blogSnap.exists()){
+        const currentLikes = blogSnap.data().likes || 0;
+        await updateDoc(blogRef, { likes: currentLikes + 1 });
+        this.refreshData();
+      }
+    },
+
+    async addComment(blogId) {
+      if(!this.username) {
+        const { value: username } = await Swal.fire({
+          title: 'Enter your username',
+          input: 'text',
+          inputLabel: 'Alias for commenting',
+          inputPlaceholder: 'Type your name',
+          inputValidator: (value) => !value && 'You need a username!'
+        });
+        if(!username) return;
+        this.username = username;
+      }
+
+      const blogRef = doc(db,"blogs",blogId);
+      const blog = this.blogs.find(b=>b.id===blogId);
+      if(!blog || !blog.newComment) return;
+
+      const commentObj = {
+        user: this.username,
+        comment: blog.newComment,
+        timestamp: serverTimestamp()
+      };
+
+      await addDoc(collection(db,"blogs",blogId,"comments"), commentObj);
+      blog.newComment='';
+      this.refreshData();
+    }
+
+  },
+
+  mounted() {
+    this.refreshData();
+  }
+
+}).mount('#app');
+</script>
+</body>
+</html>
